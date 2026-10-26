@@ -438,10 +438,6 @@
     .spotlight-view-container.layout-left .spotlight-stack {
       display: block;
       padding-left: 0;
-      /* A leftover transform (or its 0.3s transition) from another layer would make the stack the
-         containing block for the card and circle, so the wedge got measured against the wrong box */
-      transform: none !important;
-      transition: none;
     }
 
     .spotlight-view-container.layout-left .dialog-card {
