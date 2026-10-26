@@ -235,14 +235,7 @@
 
     /* RED LEADER LINE FROM THE INDIA-CHINA PIN TO THE BORDER LINE */
     .map-leader {
-      opacity: 1;
-    }
-
-    /* Only hidden until its pin has popped in (the cover hides everything before that anyway) */
-    @supports selector(:has(*)) {
-      .stage-view:not(:has(.pin-indiachina.animated)) .map-leader {
-        opacity: 0;
-      }
+      pointer-events: none;
     }
 
     /* MAP PINS WITH POP-UP & SWIVEL ANIMATIONS */
@@ -623,7 +616,7 @@
         <image id="hl-yemen"      class="map-hl" href="Resources/PastedVector-22.svg" x="664.5" y="219.8" width="34.1" height="24.2"/>
         <image id="hl-indiachina" class="map-hl" href="Resources/PastedVector-23.svg" x="769"   y="155.6" width="15.5" height="20.4"/>
         <image id="hl-southchina" class="map-hl" href="Resources/PastedVector-28.svg" x="878.0" y="197.5" width="54.5" height="84.5" filter="url(#tint-southchina)"/>
-        <polyline id="leader-indiachina" class="map-leader" points="778,156 777.7,160.9 775,163.6" fill="none" stroke="#E3120B" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"/>
+        <polyline id="leader-indiachina" class="map-hl map-leader" points="778,156 777.7,160.9 775,163.6" fill="none" stroke="#E3120B" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
 
       <!-- Map Pins -->
@@ -914,17 +907,31 @@
 
     // 6. HOVER HIGHLIGHT FOR MAP PINS
     (function () {
+      const leader = document.getElementById('leader-indiachina');
       const hl = id => document.getElementById('hl-' + id);
+
       document.querySelectorAll('.pin-btn').forEach(pin => {
         const id = pin.dataset.id;
-        const on  = () => { if (!pin.classList.contains('viewed')) hl(id).classList.add('active'); };
-        const off = () => hl(id).classList.remove('active');
+        const on = () => {
+          if (!pin.classList.contains('viewed')) {
+            const el = hl(id);
+            if (el) el.classList.add('active');
+            if (id === 'indiachina' && leader) leader.classList.add('active');
+          }
+        };
+        const off = () => {
+          const el = hl(id);
+          if (el) el.classList.remove('active');
+          if (id === 'indiachina' && leader) leader.classList.remove('active');
+        };
+
         pin.addEventListener('mouseenter', on);
         pin.addEventListener('focus', on);
         pin.addEventListener('mouseleave', off);
         pin.addEventListener('blur', off);
         pin.addEventListener('click', off);
       });
+
       document.getElementById('btn-reset').addEventListener('click', () => {
         document.querySelectorAll('.map-hl').forEach(el => el.classList.remove('active'));
       });
