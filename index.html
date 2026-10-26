@@ -229,8 +229,7 @@
       opacity: 1;
     }
 
-    .hl-southchina path {
-      fill: #475ED1;
+    #hl-southchina.active {
       opacity: 0.2;
     }
 
@@ -610,15 +609,20 @@
 
       <!-- HOVER HIGHLIGHTS (positioned in map coordinates: 1112.8 x 498.4) -->
       <svg class="map-highlights" viewBox="0 0 1112.8 498.4" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+        <defs>
+          <!-- Recolours the South China Sea overlay to #475ED1 (keeps the shape) -->
+          <filter id="tint-southchina" color-interpolation-filters="sRGB">
+            <feFlood flood-color="#475ED1" result="c"/>
+            <feComposite in="c" in2="SourceAlpha" operator="in"/>
+          </filter>
+        </defs>
         <image id="hl-ukraine"    class="map-hl" href="Resources/PastedVector-18.svg" x="589.3" y="96.7"  width="52.1" height="29.2"/>
         <image id="hl-turkey"     class="map-hl" href="Resources/PastedVector-19.svg" x="603.3" y="134.3" width="60.2" height="23.6"/>
         <image id="hl-syria"      class="map-hl" href="Resources/PastedVector-20.svg" x="634.5" y="153"   width="20"   height="19"/>
         <image id="hl-georgia"    class="map-hl" href="Resources/PastedVector-21.svg" x="651"   y="133.5" width="22.1" height="9.5"/>
         <image id="hl-yemen"      class="map-hl" href="Resources/PastedVector-22.svg" x="664.5" y="219.8" width="34.1" height="24.2"/>
         <image id="hl-indiachina" class="map-hl" href="Resources/PastedVector-23.svg" x="769"   y="155.6" width="15.5" height="20.4"/>
-        <g id="hl-southchina" class="map-hl hl-southchina" transform="translate(877.2 198.3)">
-          <path d="M0.9,36.9c0,0,4,3.6,6.6,7.4c2.6,3.8,4.1,7.4,4.6,9.1c0.5,1.7,0.3,4.5-0.7,6.7s-4.2,8.9-5,11.1 c-0.7,2.3-1.7,6.5,0.5,9.3s5.9,3.8,8.4,3.6c2.5-0.2,5.3-2.1,7.1-4.4s7.1-9.3,8.3-10.8c1.3-1.7,3.6-4.5,4.3-5.3 c1-1.2,1.7-3.3,1.7-7.3s0.7-11.6,1.6-14.5s2-7.4,4.8-10.6c2.6-2.9,5.6-5.5,7.7-7.9c2.7-3.1,4.5-7,3.5-11.9c-0.5-2.4-3.1-5.7-5-7.5 s-4.1-4-10.7-3.8S-6.3,27.1,0.9,36.9z"/>
-        </g>
+        <image id="hl-southchina" class="map-hl" href="Resources/PastedVector-28.svg" x="875.8" y="189"   width="54.6" height="84.1" filter="url(#tint-southchina)"/>
         <polyline id="leader-indiachina" class="map-leader" points="778,156 777.7,160.9 775,163.6" fill="none" stroke="#E3120B" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
 
